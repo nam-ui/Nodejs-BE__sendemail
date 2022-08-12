@@ -1,0 +1,98 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "Instagram API",
+        "description": "Tmazind your",
+        "termsOfService": "No Api"
+    },
+    "schemes": [
+        "http://localhost:5030/"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "Users"
+        }
+    ],
+    "securityDefinitions": {
+        "oauth": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "authorizationUrl": "https://instagram.com/oauth/authorize/?client_id=CLIENT-ID&redirect_uri=REDIRECT-URI&response_type=token",
+            "scopes": {
+                "basic": "to read any and all data related to a user (e.g. following/followed-by\n lists, photos, etc.) (granted by default)\n",
+                "comments": "to create or delete comments on a user’s behalf",
+                "relationships": "to follow and unfollow users on a user’s behalf",
+                "likes": "to like and unlike items on a user’s behalf"
+            }
+        },
+        "key": {
+            "type": "apiKey",
+            "in": "query",
+            "name": "access_token"
+        }
+    },
+    "security": [
+        {
+            "oauth": [
+                "basic",
+                "comments",
+                "relationships",
+                "likes"
+            ]
+        },
+        {
+            "key": []
+        }
+    ],
+    "parameters": {
+        "user-id": {
+            "name": "user-register",
+            "in": "path",
+            "description": "The user identifier number",
+            "type": "number",
+            "required": true
+        },
+        "tag-name": {
+            "name": "tag-name",
+            "in": "path",
+            "description": "Tag name",
+            "type": "string",
+            "required": true
+        }
+    },
+    "paths": {
+        "/register": {
+            "parameters": [
+                {
+                    "$ref": "#/"
+                }
+            ],
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Get basic information about a user.",
+                "responses": {
+                    "200": {
+                        "description": "The user object",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
